@@ -1,0 +1,9 @@
+127.0.0.1 - - [30/Aug/2014:14:11:44 -0400] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:11:45 -0400] "GET /RealityUWeb/index.jsp HTTP/1.1" 200 7342
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:11:59 -0400] "GET /RealityUWeb/index.jsp HTTP/1.1" 200 7342
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:12:41 -0400] "POST /RealityUWeb/AdminLoginServlet HTTP/1.1" 200 4544
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:12:45 -0400] "GET /RealityUWeb/opengroup.jsp HTTP/1.1" 200 7493
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:12:47 -0400] "POST /RealityUWeb/NewGroupServlet HTTP/1.1" 200 24032
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:24:37 -0400] "POST /RealityUWeb/NewGroupServlet HTTP/1.1" 200 9346
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:24:41 -0400] "POST /RealityUWeb/ProcessAllSurveysServlet HTTP/1.1" 200 9613
+0:0:0:0:0:0:0:1 - - [30/Aug/2014:14:25:06 -0400] "POST /RealityUWeb/ManageSurveysServlet HTTP/1.1" 200 26296
