@@ -1,0 +1,17 @@
+127.0.0.1 - - [27/Aug/2014:17:02:58 -0400] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:02:59 -0400] "GET /RealityUWeb/index.jsp HTTP/1.1" 200 7342
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:02:59 -0400] "GET /RealityUWeb/css/mainstyles.css HTTP/1.1" 200 17725
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:02:59 -0400] "GET /RealityUWeb/images/cislogo.png HTTP/1.1" 200 7025
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:02:59 -0400] "GET /RealityUWeb/css/reset.css HTTP/1.1" 200 1723
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:02:59 -0400] "GET /RealityUWeb/images/realityulogo.png HTTP/1.1" 200 5825
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:02:59 -0400] "GET /RealityUWeb/images/realityuhead.png HTTP/1.1" 200 11002
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:03:00 -0400] "GET /RealityUWeb/images/multibar.png HTTP/1.1" 200 199
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:03:00 -0400] "GET /RealityUWeb/images/gradientshadow210.png HTTP/1.1" 200 8263
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:03:11 -0400] "GET /RealityUWeb/index.jsp HTTP/1.1" 200 7342
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:03:11 -0400] "GET /favicon.ico HTTP/1.1" 404 973
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:19:54 -0400] "GET /RealityUWeb/index.jsp HTTP/1.1" 200 7342
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:19:54 -0400] "GET /favicon.ico HTTP/1.1" 404 973
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:20:20 -0400] "POST /RealityUWeb/StudentAccessServlet HTTP/1.1" 200 1936
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:20:22 -0400] "POST /RealityUWeb/StudentAccessServlet HTTP/1.1" 200 1936
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:20:27 -0400] "GET /RealityUWeb/StudentAccessServlet HTTP/1.1" 200 1936
+0:0:0:0:0:0:0:1 - - [27/Aug/2014:17:20:31 -0400] "GET /RealityUWeb/index.jsp HTTP/1.1" 200 7342
