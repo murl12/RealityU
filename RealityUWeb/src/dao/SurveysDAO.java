@@ -1,5 +1,4 @@
 package dao;
-
 /********************************************************************
  *	RealityUWeb: SurveysDAO.java
  *  3/19/2014
@@ -17,17 +16,18 @@ import javax.swing.JOptionPane;
 
 import obj.Survey;
 import dao.DbUtil;
-
 /**
  * The Class SurveysDAO retrieves data from the "Survey" table.
+ * 
+ * EDITED BY:				DATE:				DESCTRIPTION:
+ * James Hammond, SSR5		10/02/2014			Added deleteGroupSurveys(int) method
  */
 
 public class SurveysDAO implements DAO {
-
+	
 	private Date currentDateTime = new Date();
 
-	// ========================== SELECT/FIND - LIST OF SURVEYS
-	// ==========================
+	//  ==========================  SELECT/FIND - LIST OF SURVEYS  ==========================
 	/**
 	 * Gets a List of Surveys by search criteria.
 	 * 
@@ -38,17 +38,15 @@ public class SurveysDAO implements DAO {
 	 * @return Returns a List of Survey objects.
 	 */
 	public List<Survey> search(String column, String search) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
+		
 		List<Survey> lstSurvey = new ArrayList<Survey>();
 
 		String sql = "";
@@ -58,22 +56,18 @@ public class SurveysDAO implements DAO {
 			// Load Driver & Connect to Dbase
 			conn = DbUtil.createConnection();
 
-			// Delete single quotes in SQL string for 'search' parameter for
-			// dbase fields that are non-string fields
+			//Delete single quotes in SQL string for 'search' parameter for dbase fields that are non-string fields
 			if (column != null) {
-				// Change for Integer & Double dbase fields
-				if (column.equals("id") || column.equals("gpa")
-						|| column.equals("groupID") || column.equals("spouse")
-						|| column.equals("numChild")
-						|| column.equals("childSupport")
-						|| column.equals("creditScore")) {
-					// No single quotes on 'search'
+				//Change for Integer & Double dbase fields
+				if (column.equals("id") || column.equals("gpa") || column.equals("groupID") || column.equals("spouse") 
+						|| column.equals("numChild") || column.equals("childSupport") || column.equals("creditScore")) {
+					//No single quotes on 'search'
 					strWhere = "WHERE " + column + " = " + search;
-				} else { // for all String dbase fields
-					// Single quotes on 'search'
+				} else { //for all String dbase fields
+					//Single quotes on 'search'
 					strWhere = "WHERE " + column + " = '" + search + "'";
-				} // end if
-			} // end if
+				} //end if
+			} //end if
 
 			// Create SQL Statement
 			sql = "SELECT * FROM Survey " + strWhere;
@@ -82,46 +76,46 @@ public class SurveysDAO implements DAO {
 
 			// Execute Statement - Get ResultSet by Column Name
 			rs = stmt.executeQuery();
-
-			// Process the ResultSet
+			
+			//Process the ResultSet
 			while (rs.next()) {
 				Survey survey = new Survey();
 
 				survey.setId(rs.getInt("id"));
 				survey.setFname(rs.getString("fName"));
 				survey.setLname(rs.getString("lName"));
-
+				
 				survey.setDob(rs.getString("dob"));
 				survey.setGpa(rs.getDouble("gpa"));
 				survey.setGender(rs.getString("gender"));
-
+				
 				survey.setGroupID(rs.getInt("groupId"));
-				survey.setEducation(rs.getString("education"));
+				survey.setEducation(rs.getString("education"));				
 				survey.setPrefJob(rs.getString("prefJob"));
-
+				
 				survey.setJob(rs.getString("job"));
 				survey.setMarried(rs.getString("married"));
 				survey.setSpouse(rs.getInt("spouse"));
-
+				
 				survey.setChildren(rs.getString("children"));
 				survey.setNumChild(rs.getInt("numChild"));
 				survey.setCCards(rs.getString("cCards"));
-
+				
 				survey.setCCardUses(rs.getString("cCardUses"));
 				survey.setGroceries(rs.getString("groceries"));
 				survey.setClothing(rs.getString("clothing"));
-
+				
 				survey.setHome(rs.getString("home"));
 				survey.setVehicle(rs.getString("vehicle"));
 				survey.setChildSupport(rs.getDouble("childSupport"));
-
+				
 				survey.setCreditScore(rs.getDouble("creditScore"));
 				survey.setSave(rs.getString("save"));
 				survey.setEntertainment(rs.getString("entertainment"));
-
+				
 				lstSurvey.add(survey);
 			}
-
+			
 		} catch (Exception e) {
 			// Handle Errors for Class
 			System.out.println("Class Error. Current DB: " + DB + e);
@@ -132,12 +126,11 @@ public class SurveysDAO implements DAO {
 			DbUtil.close(conn);
 			System.out.println("Closed Resources");
 		} // End Try/Catch
-
+		
 		return lstSurvey;
 	}
-
-	// ========================== SELECT/FIND - ONE SURVEY
-	// ==========================
+		
+//  ==========================  SELECT/FIND - ONE SURVEY  ==========================	
 	/**
 	 * Finds a Survey by id.
 	 * 
@@ -146,17 +139,15 @@ public class SurveysDAO implements DAO {
 	 * @return Returns Survey object with that id.
 	 */
 	public Survey find(int id) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
-
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+		
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
+		
 		Survey survey = new Survey();
 
 		String sql = "";
@@ -174,41 +165,41 @@ public class SurveysDAO implements DAO {
 			System.out.println("SQL: " + sql);
 
 			// Execute Statement - Get ResultSet by Column Name
-			rs = stmt.executeQuery();
+			 rs = stmt.executeQuery();
 
-			// Process the ResultSet
+			//Process the ResultSet
 			while (rs.next()) {
 				survey.setId(rs.getInt("id"));
 				survey.setFname(rs.getString("fName"));
 				survey.setLname(rs.getString("lName"));
-
+				
 				survey.setDob(rs.getString("dob"));
 				survey.setGpa(rs.getDouble("gpa"));
 				survey.setGender(rs.getString("gender"));
-
+				
 				survey.setGroupID(rs.getInt("groupId"));
-				survey.setEducation(rs.getString("education"));
+				survey.setEducation(rs.getString("education"));				
 				survey.setPrefJob(rs.getString("prefJob"));
-
+				
 				survey.setJob(rs.getString("job"));
 				survey.setMarried(rs.getString("married"));
 				survey.setSpouse(rs.getInt("spouse"));
-
+				
 				survey.setChildren(rs.getString("children"));
 				survey.setNumChild(rs.getInt("numChild"));
 				survey.setCCards(rs.getString("cCards"));
-
+				
 				survey.setCCardUses(rs.getString("cCardUses"));
 				survey.setGroceries(rs.getString("groceries"));
 				survey.setClothing(rs.getString("clothing"));
-
+				
 				survey.setHome(rs.getString("home"));
 				survey.setVehicle(rs.getString("vehicle"));
 				survey.setChildSupport(rs.getDouble("childSupport"));
-
+				
 				survey.setCreditScore(rs.getDouble("creditScore"));
 				survey.setSave(rs.getString("save"));
-				survey.setEntertainment(rs.getString("entertainment"));
+				survey.setEntertainment(rs.getString("entertainment"));	
 			}
 
 		} catch (Exception e) {
@@ -223,9 +214,9 @@ public class SurveysDAO implements DAO {
 		} // End Try/Catch
 
 		return survey;
-	} // end find
+	} //end find
 
-	// ========================== UPDATE ==========================
+//  ==========================  UPDATE  ==========================
 	/**
 	 * Update.
 	 * 
@@ -236,11 +227,9 @@ public class SurveysDAO implements DAO {
 	 *         1: Success
 	 */
 	public int update(Survey survey) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
 		// Variable Declarations
 		Connection conn = null;
@@ -254,81 +243,80 @@ public class SurveysDAO implements DAO {
 			// Create SQL Statement
 			String sql = "UPDATE Survey SET fName=?, lName=?, dob=?, gpa=?, gender=?, groupID=?, education=?, prefJob=?, job=?, "
 					+ "married=?, spouse=?, children=?, numChild=?, cCards=?, cCardUses=?, "
-					+ "groceries=?, clothing=?, home=?, vehicle=?, childSupport=?, creditScore=?, save=?, entertainment=? "
-					+ "WHERE id=?";
+					+ "groceries=?, clothing=?, home=?, vehicle=?, childSupport=?, creditScore=?, save=?, entertainment=? " + "WHERE id=?";
 
 			stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, survey.getFname());
 			stmt.setString(2, survey.getLname());
-
+			
 			stmt.setString(3, survey.getDob());
-			stmt.setDouble(4, survey.getGpa());
+			stmt.setDouble(4, survey.getGpa());	
 			stmt.setString(5, survey.getGender());
-
+			
 			stmt.setInt(6, survey.getGroupID());
 			stmt.setString(7, survey.getEducation());
 			stmt.setString(8, survey.getPrefJob());
-
+			
 			stmt.setString(9, survey.getJob());
 			stmt.setString(10, survey.getMarried());
 			stmt.setInt(11, survey.getSpouse());
-
+			
 			stmt.setString(12, survey.getChildren());
 			stmt.setInt(13, survey.getNumChild());
 			stmt.setString(14, survey.getCCards());
-
+			
 			stmt.setString(15, survey.getCCardUses());
-			stmt.setString(16, survey.getGroceries());
+			stmt.setString(16, survey.getGroceries());	
 			stmt.setString(17, survey.getClothing());
-
+			
 			stmt.setString(18, survey.getHome());
 			stmt.setString(19, survey.getVehicle());
 			stmt.setDouble(20, survey.getChildSupport());
-
+			
 			stmt.setDouble(21, survey.getCreditScore());
 			stmt.setString(22, survey.getSave());
 			stmt.setString(23, survey.getEntertainment());
-
-			stmt.setInt(24, survey.getId());
+			
+			stmt.setInt(24,survey.getId());
 			System.out.println("SQL: " + sql);
-			// Execute Statement
+			//Execute Statement
 			rows = stmt.executeUpdate();
 		} catch (Exception e) {
 			// Handle Errors for Class
 			System.out.println("Class Error. Current DB: " + DB + e);
 		} finally {
-			// Close Query, and Database Connection
+			//Close Query, and Database Connection
 			DbUtil.close(stmt);
 			DbUtil.close(conn);
 			System.out.println("Closed Resources");
 		} // End Try/Catch
 		return rows;
 	}
-
-	// ========================== INSERT ==========================
+	
+//  ==========================  INSERT  ==========================
 	/**
 	 * Insert a new Survey.
 	 * 
 	 * @param fName
-	 * @param lName
+	 * @param lName		
 	 * @param dob
 	 * @param gpa
-	 * @param gender
+	 * @param gender		
 	 * @param groupID
 	 * @param education
-	 * @param prefJob
+	 * @param prefJob		
 	 * @param job
-	 * @param married
-	 * @param spouse
+	 * @param married 
+	 * @param spouse 		
 	 * @param children
 	 * @param numChild
-	 * @param cCards
+	 * @param cCards		
 	 * @param cCardUses
 	 * @param groceries
-	 * @param clothing
+	 * @param clothing		
 	 * @param home
-	 * @param vehicle
+	 * @param vehicle      
 	 * @param childSupport
 	 * @param creditScore
 	 * @param save
@@ -337,19 +325,15 @@ public class SurveysDAO implements DAO {
 	 *         0: Failure<br>
 	 *         1: Success
 	 */
-	public int insert(String fName, String lName, String dob, double gpa,
-			String gender, int groupID, String education, String prefJob,
-			String job, String married, int spouse, String children,
-			int numChild, String cCards, String cCardUses, String groceries,
-			String clothing, String home, String vehicle, double childSupport,
-			double creditScore, String save, String entertainment) {
-
-		// Check Table & Create Table if it doesn't already exist
+	public int insert(String fName, String lName, String dob, double gpa, String gender, 
+			int groupID, String education, String prefJob, String job, String married, int spouse, String children, 
+			int numChild, String cCards, String cCardUses, String groceries, String clothing, String home, 
+			String vehicle, double childSupport, double creditScore, String save, String entertainment){
+		
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
-
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+		
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -360,46 +344,46 @@ public class SurveysDAO implements DAO {
 			conn = DbUtil.createConnection();
 
 			// Create SQL Statement
-			String sql = "INSERT INTO Survey (fName, lName, dob, gpa, gender, groupID, education, "
-					+ "prefJob, job, married, spouse, children, numChild, cCards, cCardUses, groceries, "
-					+ "clothing, home, vehicle, childSupport, creditScore, save, entertainment) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO Survey (fName, lName, dob, gpa, gender, groupID, education, " +
+						"prefJob, job, married, spouse, children, numChild, cCards, cCardUses, groceries, " +
+						"clothing, home, vehicle, childSupport, creditScore, save, entertainment) " + 
+						"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, fName);
 			stmt.setString(2, lName);
-
+			
 			stmt.setString(3, dob);
 			stmt.setDouble(4, gpa);
 			stmt.setString(5, gender);
-
+			
 			stmt.setInt(6, groupID);
 			stmt.setString(7, education);
 			stmt.setString(8, prefJob);
-
+			
 			stmt.setString(9, job);
 			stmt.setString(10, married);
 			stmt.setInt(11, spouse);
-
+			
 			stmt.setString(12, children);
 			stmt.setInt(13, numChild);
 			stmt.setString(14, cCards);
-
+		
 			stmt.setString(15, cCardUses);
 			stmt.setString(16, groceries);
 			stmt.setString(17, clothing);
-
+			
 			stmt.setString(18, home);
 			stmt.setString(19, vehicle);
 			stmt.setDouble(20, childSupport);
-
+			
 			stmt.setDouble(21, creditScore);
 			stmt.setString(22, save);
 			stmt.setString(23, entertainment);
 			System.out.println("SQL: " + sql);
 
-			// Execute Statement
+			//Execute Statement
 			rows = stmt.executeUpdate();
 		} catch (Exception e) {
 			// Handle Errors for Class
@@ -412,9 +396,90 @@ public class SurveysDAO implements DAO {
 		} // End Try/Catch
 		return rows;
 
-	}
+	}// end int insert()
+	
+	/**
+	 * Addition by: James Hammond
+	 * Date Added: 09/30/2014
+	 * This is a new insert statement that does not have
+	 * a return type and only has a Survey object as a 
+	 * parameter.
+	 * This method was made to simplify inserting survey
+	 * data into the database, case in point, passing in a
+	 * survey object rather than every single variable for one.
+	 */
+	public void insert(Survey student){
+		//Check Table & Create Table if it doesn't already exist
+				boolean success = createTable();
+				System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+				
+				// Variable Declarations
+				Connection conn = null;
+				PreparedStatement stmt = null;
 
-	// ========================== DELETE ==========================
+				try {
+					// Load Driver & Connect to Dbase
+					conn = DbUtil.createConnection();
+
+					// Create SQL Statement
+					String sql = "INSERT INTO Survey (fName, lName, dob, gpa, gender, groupID, education, " +
+								"prefJob, job, married, spouse, children, numChild, cCards, cCardUses, groceries, " +
+								"clothing, home, vehicle, childSupport, creditScore, save, entertainment) " + 
+								"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+					stmt = conn.prepareStatement(sql);
+
+					stmt.setString(1, student.getFname());
+					stmt.setString(2, student.getLname());
+					
+					stmt.setString(3, student.getDob());
+					stmt.setDouble(4, student.getGpa());
+					stmt.setString(5, student.getGender());
+					
+					stmt.setInt(6, student.getGroupID());
+					stmt.setString(7, student.getEducation());
+					stmt.setString(8, student.getPrefJob());
+					
+					stmt.setString(9, student.getJob());
+					stmt.setString(10, student.getMarried());
+					stmt.setInt(11, student.getSpouse());
+					
+					stmt.setString(12, student.getChildren());
+					stmt.setInt(13, student.getGroupID());
+					stmt.setString(14, student.getCCards());
+				
+					stmt.setString(15, student.getCCardUses());
+					stmt.setString(16, student.getGroceries());
+					stmt.setString(17, student.getClothing());
+					
+					stmt.setString(18, student.getHome());
+					stmt.setString(19, student.getVehicle());
+					stmt.setDouble(20, student.getChildSupport());
+					
+					stmt.setDouble(21, student.getCreditScore());
+					stmt.setString(22, student.getSave());
+					stmt.setString(23, student.getEntertainment());
+					System.out.println("SQL: " + sql);
+
+					//Execute Statement
+					int n = stmt.executeUpdate();
+					// check if update was successful
+					if(n==1)
+						System.out.println("Insert success");
+					else
+						System.out.println("Error inserting");
+				} catch (Exception e) {
+					// Handle Errors for Class
+					System.out.println("Class Error. Current DB: " + DB + e);
+				} finally {
+					// Close Query, and Database Connection
+					DbUtil.close(stmt);
+					DbUtil.close(conn);
+					System.out.println("Closed Resources");
+				} // End Try/Catch
+	}// end insert(Survey) method
+
+//  ==========================  DELETE  ==========================
 	/**
 	 * Delete a Survey.
 	 * 
@@ -425,11 +490,9 @@ public class SurveysDAO implements DAO {
 	 *         1: Success
 	 */
 	public int delete(Survey survey) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
 		// Variable Declarations
 		Connection conn = null;
@@ -459,9 +522,60 @@ public class SurveysDAO implements DAO {
 		} // End Try/Catch
 
 		return rows;
-	}
+	}// end delete(Survey)
+	
+	/**
+	 *  deleteGroupSurveys(int) method
+	 * 
+	 * Method Created By: James Hammond, SSR5
+	 * Create Date: 10/02/2014
+	 * 
+	 * This method was created in order to delete an entire
+	 * group of surveys at once based off of the groupID.
+	 * I created this method due to a specific need to
+	 * delete an entire group with the CreateTestGroup class.
+	 * @param groupID
+	 */
+	public void deleteGroupSurveys(int groupID) {
+		//Check Table & Create Table if it doesn't already exist
+		boolean success = createTable();
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
-	// ========================== CHECK TABLE ==========================
+		// Variable Declarations
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			// Load Driver & Connect to Dbase
+			conn = DbUtil.createConnection();
+
+			// Create SQL Statement
+			String sql = "DELETE FROM Survey WHERE groupID = "+ groupID;
+			stmt = conn.prepareStatement(sql);
+			System.out.println("SQL: " + sql);
+
+			// Execute SQL Statement
+			int n = stmt.executeUpdate();
+			
+//			if(n==1){
+//				System.out.println("Successful Delete");
+//			}else{
+//				System.out.println("Error Deleting");
+//			}
+			
+		} catch (Exception e) {
+			// Handle Errors for Class
+			System.out.println("Class Error. Current DB: " + DB + e);
+		} finally {
+			// Close Query, and Database Connection
+			DbUtil.close(stmt);
+			DbUtil.close(conn);
+			System.out.println("Closed Resources");
+		} // End Try/Catch
+
+	}// end deleteGroupSurveys(int groupID);
+	
+	//  ==========================  CHECK TABLE  ==========================
 	/**
 	 * This method makes sure table exists<br>
 	 * 
@@ -474,9 +588,8 @@ public class SurveysDAO implements DAO {
 		found = DbUtil.checkTable(tableName);
 		return found;
 	}
-
-	// ========================== CREATE TABLE IF DOESN'T EXIST
-	// ==========================
+	
+	//  ==========================  CREATE TABLE IF DOESN'T EXIST  ==========================
 	/**
 	 * Creates a table if it doesn't exist
 	 * 
@@ -486,77 +599,95 @@ public class SurveysDAO implements DAO {
 	public boolean createTable() {
 		boolean success = true;
 		String tableName = "Survey";
-
+		
 		// Create SQL Statement
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableName
 				+ " ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-				+ "'fName' VARCHAR," + "'lName' VARCHAR," + "'dob' VARCHAR,"
-				+ "'gpa' DOUBLE," + "'gender' VARCHAR," + "'groupID' INTEGER,"
-				+ "'education' VARCHAR," + "'prefJob' VARCHAR,"
-				+ "'job' VARCHAR," + "'married' VARCHAR," + "'spouse' INTEGER,"
-				+ "'children' VARCHAR," + "'numChild' INTEGER,"
-				+ "'cCards' VARCHAR," + "'cCardUses' VARCHAR,"
-				+ "'groceries' VARCHAR," + "'clothing' VARCHAR,"
-				+ "'home' VARCHAR," + "'vehicle' VARCHAR,"
-				+ "'childSupport' DOUBLE," + "'creditScore' DOUBLE,"
-				+ "'save' VARCHAR," + "'entertainment' VARCHAR)";
-
+				+ "'fName' VARCHAR,"
+				+ "'lName' VARCHAR,"
+				+ "'dob' VARCHAR,"
+				+ "'gpa' DOUBLE,"
+				+ "'gender' VARCHAR,"
+				+ "'groupID' INTEGER,"
+				+ "'education' VARCHAR,"
+				+ "'prefJob' VARCHAR,"
+				+ "'job' VARCHAR,"
+				+ "'married' VARCHAR,"
+				+ "'spouse' INTEGER,"
+				+ "'children' VARCHAR,"
+				+ "'numChild' INTEGER,"
+				+ "'cCards' VARCHAR,"
+				+ "'cCardUses' VARCHAR,"
+				+ "'groceries' VARCHAR,"
+				+ "'clothing' VARCHAR,"
+				+ "'home' VARCHAR,"
+				+ "'vehicle' VARCHAR,"
+				+ "'childSupport' DOUBLE,"
+				+ "'creditScore' DOUBLE,"
+				+ "'save' VARCHAR,"
+				+ "'entertainment' VARCHAR)";
+		
 		success = DbUtil.createTable(tableName, sql);
-
+		
 		return success;
 	}
+	
 
-	// ======================== MAIN METHOD ====================
+//  ========================  MAIN METHOD  ==================== 
 	public static void main(String[] args) {
 		List<Survey> lstSurvey = new ArrayList<Survey>();
 		Survey surv = new Survey();
-		// Create SurveysDAO & Survey Objs and Validate Login
-		SurveysDAO surv1 = new SurveysDAO();
-		// Returns List of Survey fields matching search criteria (even if only
-		// 1)
-		lstSurvey = surv1.search("dob", "11/12/1979"); // Lookup by dob
-		// Extract single Survey obj from List
-		// Loop thru Survey List (should only be 1 obj in list)
-		for (int i = 0; i < lstSurvey.size(); i++) {
-			if (i == 0) {
-				surv = lstSurvey.get(i);
-				System.out.println("Extracted Survey obj from List.");
-				surv.display();
-			} else { // more than one obj in list
-				System.out.println("Error - Duplicate Survey.");
-			} // end if
-		} // end for
+       //Create SurveysDAO & Survey Objs and Validate Login
+       SurveysDAO surv1 = new SurveysDAO();
+       //Returns List of Survey fields matching search criteria (even if only 1)
+       lstSurvey = surv1.search("dob", "11/12/1979"); //Lookup by dob
+       //Extract single Survey obj from List
+       //Loop thru Survey List (should only be 1 obj in list)
+       for (int i = 0; i < lstSurvey.size(); i++)
+       {
+       	if (i == 0) {
+       		surv = lstSurvey.get(i);
+       		System.out.println("Extracted Survey obj from List.");
+       		surv.display();
+       	} else { //more than one obj in list
+       		System.out.println("Error - Duplicate Survey.");
+       	} //end if
+       } //end for
+		
+               
+       //Test find
+//     Administrator adm = new Administrator();
+//     AdministratorsDAO adao1 = new AdministratorsDAO();        
+//     adm = adao1.find(2);
+//     adm.display();
+     
+     //Test update
+//     Administrator adm = new Administrator();
+//     AdministratorsDAO adao1 = new AdministratorsDAO(); 
+//     adm = adao1.find(3);
+//     adm.setFname("Billy");
+//     int rows = adao1.update(adm);
+//     System.out.println("Rows = " + rows);
+//     adm.display();
+     
+     
+     //Test insert
+//		AdministratorsDAO adao1 = new AdministratorsDAO();        
+//		int rows = adao1.insert("test4", "pwd4", "Mary", "Tester");
+//		Administrator adm = new Administrator();
+//		adm = adao1.find(4);
+//		adm.display();
+		
+		//Test delete
+//		AdministratorsDAO adao1 = new AdministratorsDAO(); 
+//		Administrator adm = new Administrator();
+//		adm = adao1.find(4);
+//		int rows = adao1.delete(adm);
+//		adm = adao1.find(4);
+//		adm.display();	//Should be nothing if deleted
+//		System.out.println("Rows = " + rows);
+	} //end main()	
 
-		// Test find
-		// Administrator adm = new Administrator();
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// adm = adao1.find(2);
-		// adm.display();
-
-		// Test update
-		// Administrator adm = new Administrator();
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// adm = adao1.find(3);
-		// adm.setFname("Billy");
-		// int rows = adao1.update(adm);
-		// System.out.println("Rows = " + rows);
-		// adm.display();
-
-		// Test insert
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// int rows = adao1.insert("test4", "pwd4", "Mary", "Tester");
-		// Administrator adm = new Administrator();
-		// adm = adao1.find(4);
-		// adm.display();
-
-		// Test delete
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// Administrator adm = new Administrator();
-		// adm = adao1.find(4);
-		// int rows = adao1.delete(adm);
-		// adm = adao1.find(4);
-		// adm.display(); //Should be nothing if deleted
-		// System.out.println("Rows = " + rows);
-	} // end main()
 
 }
+

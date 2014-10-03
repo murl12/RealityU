@@ -1,5 +1,4 @@
 package dao;
-
 /********************************************************************
  *	RealityUWeb: GroupsDAO.java
  *  3/21/2014
@@ -13,6 +12,7 @@ import java.util.List;
 
 //import ctrl.Controller;
 
+
 import obj.Group;
 import dao.DAO;
 import dao.DbUtil;
@@ -23,9 +23,8 @@ import dao.DbUtil;
 public class GroupsDAO implements DAO {
 
 	private Date currentDateTime = new Date();
-
-	// ========================== SELECT/FIND - LIST OF GROUPS
-	// ==========================
+	
+	//  ==========================  SELECT/FIND - LIST OF GROUPS  ==========================
 	/**
 	 * Gets a List of Groups by search criteria.
 	 * 
@@ -36,11 +35,9 @@ public class GroupsDAO implements DAO {
 	 * @return Returns a List of Group objects.
 	 */
 	public List<Group> search(String column, String search) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
 		// Variable Declarations
 		Connection conn = null;
@@ -67,7 +64,7 @@ public class GroupsDAO implements DAO {
 			// Execute Statement - Get ResultSet by Column Name
 			rs = stmt.executeQuery();
 
-			// Process the ResultSet
+			//Process the ResultSet
 			while (rs.next()) {
 				Group grp = new Group();
 
@@ -99,8 +96,7 @@ public class GroupsDAO implements DAO {
 		return lstGroup;
 	}
 
-	// ========================== SELECT/FIND - ONE GROUP BY ID
-	// ==========================
+//  ==========================  SELECT/FIND - ONE GROUP BY ID  ==========================	
 	/**
 	 * Finds a Group by id.
 	 * 
@@ -109,17 +105,15 @@ public class GroupsDAO implements DAO {
 	 * @return Returns an Group object with that id.
 	 */
 	public Group find(int id) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
-
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+		
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
+		
 		Group grp = new Group();
 
 		String sql = "";
@@ -139,7 +133,7 @@ public class GroupsDAO implements DAO {
 			// Execute Statement - Get ResultSet by Column Name
 			rs = stmt.executeQuery();
 
-			// Process the ResultSet
+			//Process the ResultSet
 			while (rs.next()) {
 				grp.setId(rs.getInt("id"));
 				grp.setName(rs.getString("name"));
@@ -165,10 +159,9 @@ public class GroupsDAO implements DAO {
 		} // End Try/Catch
 
 		return grp;
-	} // end find
+	} //end find
 
-	// ========================== SELECT/FIND - ONE GROUP BY STUDENT ACCESS CODE
-	// ==========================
+//  ==========================  SELECT/FIND - ONE GROUP BY STUDENT ACCESS CODE  ==========================	
 	/**
 	 * Finds a Group by student access code.
 	 * 
@@ -176,18 +169,16 @@ public class GroupsDAO implements DAO {
 	 *            : The Group access code to search for.
 	 * @return Returns an Group object with that access code.
 	 */
-	public Group find(String studentAccessCode) {
-		// Check Table & Create Table if it doesn't already exist
+	public Group find(String name) {
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
-
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+				
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
+		
 		Group grp = new Group();
 
 		String sql = "";
@@ -198,7 +189,7 @@ public class GroupsDAO implements DAO {
 			conn = DbUtil.createConnection();
 
 			// Create SQL Statement
-			strWhere = "WHERE studentAccessCode = '" + studentAccessCode + "'";
+			strWhere = "WHERE name = '" + name + "'";
 
 			sql = "SELECT * FROM Group_ " + strWhere;
 			stmt = conn.prepareStatement(sql);
@@ -207,7 +198,7 @@ public class GroupsDAO implements DAO {
 			// Execute Statement - Get ResultSet by Column Name
 			rs = stmt.executeQuery();
 
-			// Process the ResultSet
+			//Process the ResultSet
 			while (rs.next()) {
 				grp.setId(rs.getInt("id"));
 				grp.setName(rs.getString("name"));
@@ -233,22 +224,19 @@ public class GroupsDAO implements DAO {
 		} // End Try/Catch
 
 		return grp;
-	} // end find
-
-	// ========================== SELECT/FIND - LIST OF ALL GROUPS
-	// ==========================
+	} //end find
+	
+	//  ==========================  SELECT/FIND - LIST OF ALL GROUPS  ==========================
 	/**
 	 * Creates a List of all Group objects.
 	 * 
 	 * @return Returns a List of Group objects.
 	 */
 	public List<Group> findAllGroups() {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
-
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+				
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -270,7 +258,7 @@ public class GroupsDAO implements DAO {
 			// Execute Statement - Get ResultSet by Column Name
 			rs = stmt.executeQuery();
 
-			// Process the ResultSet
+			//Process the ResultSet
 			while (rs.next()) {
 				Group grp = new Group();
 
@@ -301,8 +289,8 @@ public class GroupsDAO implements DAO {
 
 		return lstGroup;
 	}
-
-	// ========================== UPDATE ==========================
+	
+	//  ==========================  UPDATE  ==========================
 	/**
 	 * Update.
 	 * 
@@ -313,11 +301,9 @@ public class GroupsDAO implements DAO {
 	 *         1: Success
 	 */
 	public int update(Group grp) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
 		// Variable Declarations
 		Connection conn = null;
@@ -329,9 +315,8 @@ public class GroupsDAO implements DAO {
 			conn = DbUtil.createConnection();
 
 			// Create SQL Statement
-			String sql = "UPDATE Group_ SET name=?, created=?, modified=?, highschool=?, "
-					+ "teacher=?, classPeriod=?, surveyStartDate=?, surveyEndDate=?, eventDate=?, studentAccessCode=? "
-					+ "WHERE id=?";
+			String sql = "UPDATE Group_ SET name=?, created=?, modified=?, highschool=?, " +
+						"teacher=?, classPeriod=?, surveyStartDate=?, surveyEndDate=?, eventDate=?, studentAccessCode=? "+ "WHERE id=?";
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, grp.getName());
@@ -346,8 +331,8 @@ public class GroupsDAO implements DAO {
 			stmt.setString(10, grp.getStudentAccessCode());
 			stmt.setInt(11, grp.getId());
 			System.out.println("SQL: " + sql);
-
-			// Execute Statement
+			
+			//Execute Statement
 			rows = stmt.executeUpdate();
 		} catch (Exception e) {
 			// Handle Errors for Class
@@ -362,7 +347,7 @@ public class GroupsDAO implements DAO {
 		return rows;
 	}
 
-	// ========================== INSERT ==========================
+	//  ==========================  INSERT  ==========================
 	/**
 	 * Insert a new Group.
 	 * 
@@ -371,7 +356,7 @@ public class GroupsDAO implements DAO {
 	 * @param modified
 	 * @param highschool
 	 * @param teacher
-	 * @param classPeriod
+	 * @param classPeriod 
 	 * @param surveyStartDate
 	 * @param surveyEndDate
 	 * @param eventDate
@@ -380,17 +365,14 @@ public class GroupsDAO implements DAO {
 	 *         0: Failure<br>
 	 *         1: Success
 	 */
-	public int insert(String name, String created, String modified,
-			String highschool, String teacher, String classPeriod,
-			String surveyStartDate, String surveyEndDate, String eventDate,
-			String studentAccessCode) {
+	public int insert(String name, String created, String modified, String highschool, 
+			String teacher, String classPeriod, String surveyStartDate, String surveyEndDate,
+			String eventDate, String studentAccessCode){
 
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
-
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
+		
 		// Variable Declarations
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -403,10 +385,9 @@ public class GroupsDAO implements DAO {
 			conn = DbUtil.createConnection();
 
 			// Create SQL Statement
-			String sql = "INSERT INTO Group_ (name, created, modified, highschool, "
-					+ "teacher, classPeriod, surveyStartDate, surveyEndDate, "
-					+ "eventDate, studentAccessCode) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO Group_ (name, created, modified, highschool, " +
+						"teacher, classPeriod, surveyStartDate, surveyEndDate, " +
+						"eventDate, studentAccessCode) " + "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, name);
@@ -421,7 +402,7 @@ public class GroupsDAO implements DAO {
 			stmt.setString(10, studentAccessCode);
 			System.out.println("SQL: " + sql);
 
-			// Execute Statement
+			//Execute Statement
 			rows = stmt.executeUpdate();
 		} catch (Exception e) {
 			// Handle Errors for Class
@@ -436,7 +417,7 @@ public class GroupsDAO implements DAO {
 
 	}
 
-	// ========================== DELETE ==========================
+	//  ==========================  DELETE  ==========================
 	/**
 	 * Delete a Group.
 	 * 
@@ -447,11 +428,9 @@ public class GroupsDAO implements DAO {
 	 *         1: Success
 	 */
 	public int delete(Group grp) {
-		// Check Table & Create Table if it doesn't already exist
+		//Check Table & Create Table if it doesn't already exist
 		boolean success = createTable();
-		System.out
-				.println("Check if table exists (create if doesn't exist). Table exists: "
-						+ success);
+		System.out.println("Check if table exists (create if doesn't exist). Table exists: " + success);
 
 		// Variable Declarations
 		Connection conn = null;
@@ -482,9 +461,10 @@ public class GroupsDAO implements DAO {
 		} // End Try/Catch
 
 		return rows;
-	}
-
-	// ========================== CHECK TABLE ==========================
+	}	
+	
+	
+	//  ==========================  CHECK TABLE  ==========================
 	/**
 	 * This method makes sure table exists<br>
 	 * 
@@ -497,9 +477,8 @@ public class GroupsDAO implements DAO {
 		found = DbUtil.checkTable(tableName);
 		return found;
 	}
-
-	// ========================== CREATE TABLE IF DOESN'T EXIST
-	// ==========================
+	
+	//  ==========================  CREATE TABLE IF DOESN'T EXIST  ==========================
 	/**
 	 * Creates a table if it doesn't exist
 	 * 
@@ -509,78 +488,88 @@ public class GroupsDAO implements DAO {
 	public boolean createTable() {
 		boolean success = true;
 		String tableName = "Group_";
-
+		
 		// Create SQL Statement
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableName
 				+ " ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-				+ "'name' VARCHAR NOT NULL," + "'created' DATETIME,"
-				+ "'modified' DATETIME," + "'highschool' VARCHAR,"
-				+ "'teacher' VARCHAR," + "'classPeriod' VARCHAR,"
-				+ "'surveyStartDate' DATETIME," + "'surveyEndDate' DATETIME,"
-				+ "'eventDate' DATETIME," + "'studentAccessCode' VARCHAR)";
-
+				+ "'name' VARCHAR NOT NULL,"
+				+ "'created' DATETIME,"
+				+ "'modified' DATETIME,"	
+				+ "'highschool' VARCHAR,"
+				+ "'teacher' VARCHAR,"
+				+ "'classPeriod' VARCHAR,"
+				+ "'surveyStartDate' DATETIME,"
+				+ "'surveyEndDate' DATETIME,"
+				+ "'eventDate' DATETIME,"
+				+ "'studentAccessCode' VARCHAR)";
+		
 		success = DbUtil.createTable(tableName, sql);
-
+		
 		return success;
 	}
 
-	// ======================== MAIN METHOD ====================
-	public static void main(String[] args) {
+	
+    //   ========================  MAIN METHOD  ==================== 
+	public static void main(String[] args) {		
 		List<Group> lstGrp = new ArrayList<Group>();
 		Group grp = new Group();
-		// Create GroupsDAO & Group Objs and Validate Login
-		GroupsDAO g1 = new GroupsDAO();
+        //Create GroupsDAO & Group Objs and Validate Login
+        GroupsDAO g1 = new GroupsDAO();
+        
+        System.out.println("DB string = " + DAO.DB);
+        
+        //Returns List of Groups matching search criteria (even if only 1)
+        lstGrp = g1.search("name", "Group A"); //Lookup by name         
+        //Extract single Group obj from List
+        //Loop thru Group List (should only be 1 obj in list)
+        for (int i = 0; i < lstGrp.size(); i++)
+        {
+        	if (i == 0) {
+        		grp = lstGrp.get(i);
+        		System.out.println("Extracted Group obj from List.");
+        		grp.display();
+        	} else { //more than one obj in list
+        		System.out.println("Error - Duplicate Username.");
+        	} //end if
+        } //end for
+        
+        
+        boolean n = g1.createTable();
+        System.out.println("Create Table Returns: " + n);
 
-		System.out.println("DB string = " + DAO.DB);
+		
+        //Test find
+//        Administrator adm = new Administrator();
+//        AdministratorsDAO adao1 = new AdministratorsDAO();        
+//        adm = adao1.find(2);
+//        adm.display();
+        
+        //Test update
+//        Administrator adm = new Administrator();
+//        AdministratorsDAO adao1 = new AdministratorsDAO(); 
+//        adm = adao1.find(3);
+//        adm.setFname("Billy");
+//        int rows = adao1.update(adm);
+//        System.out.println("Rows = " + rows);
+//        adm.display();
+        
+        
+        //Test insert
+//		AdministratorsDAO adao1 = new AdministratorsDAO();        
+//		int rows = adao1.insert("test4", "pwd4", "Mary", "Tester");
+//		Administrator adm = new Administrator();
+//		adm = adao1.find(4);
+//		adm.display();
+		
+		//Test delete
+//		AdministratorsDAO adao1 = new AdministratorsDAO(); 
+//		Administrator adm = new Administrator();
+//		adm = adao1.find(4);
+//		int rows = adao1.delete(adm);
+//		adm = adao1.find(4);
+//		adm.display();	//Should be nothing if deleted
+//		System.out.println("Rows = " + rows);
 
-		// Returns List of Groups matching search criteria (even if only 1)
-		lstGrp = g1.search("name", "Group A"); // Lookup by name
-		// Extract single Group obj from List
-		// Loop thru Group List (should only be 1 obj in list)
-		for (int i = 0; i < lstGrp.size(); i++) {
-			if (i == 0) {
-				grp = lstGrp.get(i);
-				System.out.println("Extracted Group obj from List.");
-				grp.display();
-			} else { // more than one obj in list
-				System.out.println("Error - Duplicate Username.");
-			} // end if
-		} // end for
-
-		boolean n = g1.createTable();
-		System.out.println("Create Table Returns: " + n);
-
-		// Test find
-		// Administrator adm = new Administrator();
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// adm = adao1.find(2);
-		// adm.display();
-
-		// Test update
-		// Administrator adm = new Administrator();
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// adm = adao1.find(3);
-		// adm.setFname("Billy");
-		// int rows = adao1.update(adm);
-		// System.out.println("Rows = " + rows);
-		// adm.display();
-
-		// Test insert
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// int rows = adao1.insert("test4", "pwd4", "Mary", "Tester");
-		// Administrator adm = new Administrator();
-		// adm = adao1.find(4);
-		// adm.display();
-
-		// Test delete
-		// AdministratorsDAO adao1 = new AdministratorsDAO();
-		// Administrator adm = new Administrator();
-		// adm = adao1.find(4);
-		// int rows = adao1.delete(adm);
-		// adm = adao1.find(4);
-		// adm.display(); //Should be nothing if deleted
-		// System.out.println("Rows = " + rows);
-
-	} // end main()
+	} //end main()	
 
 }
